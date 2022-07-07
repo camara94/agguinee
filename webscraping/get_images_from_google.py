@@ -1,5 +1,10 @@
 import argparse
 
+from tqdm import tqdm
+from bs4 import BeautifulSoup
+from time import sleep
+import requests
+
 
 app = argparse.ArgumentParser()
 app.add_argument("-l", "--lien", required=True,
@@ -35,3 +40,29 @@ elif args["startIndex"] == None and args["endIndex"] != None:
     urlsFinal = urls[: endIndex]
 elif args["startIndex"] == None and args["endIndex"] == None:
     urlsFinal = urls
+
+
+def get_url_images_from_google(urls):
+    url_images = []
+
+    for url in tqdm(urls):
+        print('TELECHARGEMENT ENCOURS.....')
+
+        requete = requests.get(url)
+
+        if requete.status_code != 200:
+            print(f'Un problème est sur {url}')
+        else:
+            doc = BeautifulSoup(requete.content, "html.parser")
+            for item in doc.find_all("img"):
+                try:
+                    url_images.append(item['src'])
+                except:
+                    pass
+            sleep(8)
+
+    return url_images
+
+
+url_images = get_url_images_from_google(urlsFinal)
+print(url_images)
