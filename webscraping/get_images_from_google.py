@@ -61,7 +61,7 @@ def get_url_images_from_google(urls):
                     pass
             sleep(8)
 
-    return url_images
+    return url_images[1:]
 
 
 url_images = get_url_images_from_google(urlsFinal)
