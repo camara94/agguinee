@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from time import sleep
 import requests
 
+import os
+import urllib
 
 app = argparse.ArgumentParser()
 app.add_argument("-l", "--lien", required=True,
@@ -65,4 +67,23 @@ def get_url_images_from_google(urls):
 
 
 url_images = get_url_images_from_google(urlsFinal)
-print(url_images)
+
+nomFichier = fichier[: fichier.find(".txt")]
+
+
+def download_image_from_google(url_image=url_images, nomfichier=nomFichier, num=0):
+    if os.path.exists(os.path.join("images/", nomFichier)):
+        pass
+    else:
+        os.makedirs(os.path.join("images/", nomFichier))
+
+    for index, url in tqdm(enumerate(url_image)):
+        try:
+            nomComplet = "images/" + nomFichier + "/" + str(index+1) + ".jpg"
+            urllib.request.urlretrieve(url, nomComplet)
+        except:
+            pass
+    print("Fin de téléchargement ....")
+
+
+download_image_from_google()
