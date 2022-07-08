@@ -10,7 +10,7 @@ for(let i=0; i < categories.length; i++) {
 
 let nomFichier = "";
 nomFichier = document.querySelector("input.og3lId").value
-nomFichier = document.querySelector("input.og3lId").value.replace(" ", "_");
+nomFichier = document.querySelector("input.og3lId").value.replaceAll(" ", "_");
 
 let telecharger = (contenu, nomFicher, contentType) => {
 
